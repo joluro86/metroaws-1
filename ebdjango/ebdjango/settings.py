@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-!gk1^evfw&$b#ftv#nf#3a+=62sfvi_(d-)3ld3$0dgi!2+(tb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['django-env-4.eba-32j2crwc.us-west-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['django-env-4.eba-32j2crwc.us-west-2.elasticbeanstalk.com', '127.0.0.1']
 
 
 # Application definition
@@ -34,9 +35,15 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.humanize',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'gestionvencimientos',
+    'programacion',
+    'analisis',
+    'import_export',
+    'perseovsfenix',
 ]
 
 MIDDLEWARE = [

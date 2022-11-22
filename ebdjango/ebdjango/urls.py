@@ -2,11 +2,13 @@ from django.contrib import admin
 from django.urls import path
 from gestionvencimientos.views import *
 from django.urls.conf import include
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls, name="administrador"),
     path('', index, name="home"),
-     path('pendientes/<int:id_dia>', calculo_pendientes, name="pendientes"),
+    path('pendientes/<int:id_dia>', calculo_pendientes, name="pendientes"),
     path('proxsemana/<int:id_dia>', calculo_next_week, name="pendientes_next_week"),
     path('antsemana/<int:id_dia>', calculo_last_week, name="pendientes_last_week"),
     path('pendientes/', menu_pendientes, name="menu_pendientes"),
@@ -21,8 +23,8 @@ urlpatterns = [
     path('otros/<int:cliente>/<int:apla>/<int:pendi>/', otros_pedidos, name="otros"),
     path('epm/<str:inicio>/<str:final>/', vencimientos_epm, name="epm"),
     path('accounts/', include('django.contrib.auth.urls')),
-    
+
     path('comparativo/', include('perseovsfenix.urls')),
     path('analisis/', include('analisis.urls')),
     path('programar/', include('programacion.urls')),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

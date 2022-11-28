@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-!gk1^evfw&$b#ftv#nf#3a+=62sfvi_(d-)3ld3$0dgi!2+(tb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['django-env-4.eba-32j2crwc.us-west-2.elasticbeanstalk.com', '127.0.0.1']
+ALLOWED_HOSTS = ['django-env.eba-jthqksxn.us-east-1.elasticbeanstalk.com', '127.0.0.1']
 
 
 # Application definition
@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'analisis',
     'import_export',
     'perseovsfenix',
+    'regional',
 ]
 
 MIDDLEWARE = [

@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
 from gestionvencimientos.models import *
+from regional.models import Regional
 
 @login_required
 def index(request):
@@ -75,7 +76,7 @@ def limpiar_base(request):
     aneses = Ans.objects.all().only('Subzona', 'Actividad')
 
     for ans in aneses:
-        if ans.Subzona != "Uraba":
+        if ans.Subzona != Regional.objects.get().regional:
             ans.delete()
 
         elif ans.Actividad != "FSE" and ans.Actividad != "INFSM" and ans.Actividad != "ACREV" and ans.Actividad != "AEJDO" and ans.Actividad != "ARTER" and ans.Actividad != "DIPRE" and ans.Actividad != "INPRE" and ans.Actividad != "REEQU" and ans.Actividad != "APLIN" and ans.Actividad != "ALEGA" and ans.Actividad != "ALEGN" and ans.Actividad != "ALECA" and ans.Actividad != "ACAMN" and ans.Actividad != "AMRTR":

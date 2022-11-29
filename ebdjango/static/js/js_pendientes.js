@@ -151,33 +151,44 @@ function cierre_masivo() {
   });
 }
 
-function gestion_bd() {
-  url = "/limpiar/";
-  swal
-    .fire({
-      title: "¿Esta seguro de Gestionar la base de datos?",
-      type: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Cancelar",
-      confirmButtonText: "¡Si, gestionar!",
-    })
-    .then(function (result) {
-      if (result.value) {
-        Swal.fire({
-          title: 'Gestionando la base de datos...',
-          html: 'Por favor, espere...',
-          allowEscapeKey: false,
-          allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          }          
-        })      
-        window.location.href = url;
-      }
-    });
-}
+document.getElementById("formulario_regional").addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  if (!document.querySelector('input[name="id_region"]:checked')) {
+    Swal.fire(
+      'Seleccione una región',
+      'Es necesario para continuar',
+      'question'
+    )
+    hasError = true;
+  } else {
+    swal
+      .fire({
+        title: "¿Esta seguro de Gestionar la base de datos?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Cancelar",
+        confirmButtonText: "¡Si, gestionar!",
+      })
+      .then(function (result) {
+        if (result.value) {
+          document.getElementById("formulario_regional").submit();
+          Swal.fire({
+            title: 'Gestionando la base de datos...',
+            html: 'Por favor, espere...',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            didOpen: () => {
+              Swal.showLoading();
+            }
+          })
+        }
+      });
+  }
+  if (hasError) event.preventDefault();
+});
 
 function calculo_novedades() {
   url = "/analisis/calculo_novedades/";
@@ -228,8 +239,8 @@ function limpiar_novedades_acta() {
           allowOutsideClick: false,
           didOpen: () => {
             Swal.showLoading();
-          }          
-        }) 
+          }
+        })
         window.location.href = url;
       }
     });
@@ -284,8 +295,8 @@ function reiniciar_bd() {
           allowOutsideClick: false,
           didOpen: () => {
             Swal.showLoading();
-          }          
-        }) 
+          }
+        })
         window.location.href = url;
       }
     });
@@ -323,8 +334,8 @@ function fechas_busqueda_epm() {
           allowOutsideClick: false,
           didOpen: () => {
             Swal.showLoading();
-          }          
-        }) 
+          }
+        })
         window.location.href = "/epm/" + inicio + "/" + final + "/";
       }
     });
@@ -370,8 +381,8 @@ function calculo_novedades_perseo_vs_fenix() {
           allowOutsideClick: false,
           didOpen: () => {
             Swal.showLoading();
-          }          
-        }) 
+          }
+        })
         window.location.href = url;
       }
     });
@@ -398,8 +409,8 @@ function reiniciar_bd_perseo_vs_fenix() {
           allowOutsideClick: false,
           didOpen: () => {
             Swal.showLoading();
-          }          
-        }) 
+          }
+        })
         window.location.href = url;
       }
     });
@@ -426,8 +437,8 @@ function reiniciar_novedades_bd_perseo_vs_fenix() {
           allowOutsideClick: false,
           didOpen: () => {
             Swal.showLoading();
-          }          
-        }) 
+          }
+        })
         window.location.href = url;
       }
     });

@@ -11,6 +11,11 @@ from regional.models import Regional
 def index(request):
     return render(request,  "index.html")
 
+@login_required
+def ir_a_seleccion_region(request):
+    regiones = Regional.objects.all()
+    return render(request,  "seleccionar_regional.html", {'regiones':regiones})
+
 def calculo_dia_actutal():
     
     fecha_actual = datetime.now()
@@ -72,11 +77,14 @@ def menu_pendientes(self):
 
 @login_required
 def limpiar_base(request):
-    lista_ans = []
+
     aneses = Ans.objects.all().only('Subzona', 'Actividad')
 
+    if request.method == 'POST':
+        id = request.POST["id_region"]
+
     for ans in aneses:
-        if ans.Subzona != Regional.objects.get().regional:
+        if ans.Subzona != Regional.objects.get(id=id).regional:
             ans.delete()
 
         elif ans.Actividad != "FSE" and ans.Actividad != "INFSM" and ans.Actividad != "ACREV" and ans.Actividad != "AEJDO" and ans.Actividad != "ARTER" and ans.Actividad != "DIPRE" and ans.Actividad != "INPRE" and ans.Actividad != "REEQU" and ans.Actividad != "APLIN" and ans.Actividad != "ALEGA" and ans.Actividad != "ALEGN" and ans.Actividad != "ALECA" and ans.Actividad != "ACAMN" and ans.Actividad != "AMRTR":

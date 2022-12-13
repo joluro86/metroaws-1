@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from perseovsfenix.models import *
+from django.db.models import Sum
 
 
 def reiniciar_bd_materiales(request):
@@ -36,7 +37,8 @@ def pedidos_fenix(request):
                 no.append(p.pedido)
                 cont2 += 1
 
-    return HttpResponse("termino")  
+    return HttpResponse("termino")
+
 
 def concatenar(pedidos, indicador):
     for p in pedidos:

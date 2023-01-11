@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'import_export',
     'perseovsfenix',
     'regional',
+    'bonificaciones'
 ]
 
 MIDDLEWARE = [

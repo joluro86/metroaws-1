@@ -12,7 +12,7 @@ function cerrar_pedido(id) {
     })
     .then(function (result) {
       if (result.value) {
-        window.location.href = url
+        window.location.href = url 
       }
     });
 }
@@ -128,67 +128,258 @@ function otros_pedidos() {
   });
 }
 
-function cierre_masivo() {
-  Swal.fire({
-    title: "Ingrese fecha y hora de cierre",
-    html: `<input type="date" id="fecha_cierre" class="form-control input swal2-input" placeholder="Fecha de cierre">
-    <input type="time" id="hora_cierre" class="form-control input swal2-input" placeholder="Hora de cierre">`,
-    confirmButtonText: "Guardar",
-    focusConfirm: false,
-    preConfirm: () => {
-      const fecha = Swal.getPopup().querySelector("#fecha_cierre").value;
-      const hora = Swal.getPopup().querySelector("#hora_cierre").value;
-      if (!fecha || !hora) {
-        Swal.showValidationMessage(`Por favor ingrese fecha y hora`);
+
+
+function gestion_bd() {
+  url = "/limpiar/";
+  swal
+    .fire({
+      title: "¿Esta seguro de Gestionar la base de datos?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "¡Si, gestionar!",
+    })
+    .then(function (result) {
+      if (result.value) {
+        window.location.href = url;
       }
-      return { fecha: fecha, hora: hora };
-    },
-  }).then((result) => {
-    if (result.value) {
-      window.location.href =
-        "/cierre_masivo/" + result.value.fecha + "/" + result.value.hora;
-    }
-  });
+    });
 }
 
-document.getElementById("formulario_regional").addEventListener("submit", function (event) {
-  event.preventDefault();
+function reiniciar_bd() {
+  url = "/eliminar/";
+  swal
+    .fire({
+      title: "¿Esta seguro de eliminar la información de la base de datos?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "¡Si, eliminar!",
+    })
+    .then(function (result) {
+      if (result.value) {
+        window.location.href = url;
+      }
+    });
+}
 
-  if (!document.querySelector('input[name="id_region"]:checked')) {
-    Swal.fire(
-      'Seleccione una región',
-      'Es necesario para continuar',
-      'question'
-    )
-    hasError = true;
-  } else {
-    swal
-      .fire({
-        title: "¿Esta seguro de Gestionar la base de datos?",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        cancelButtonText: "Cancelar",
-        confirmButtonText: "¡Si, gestionar!",
-      })
-      .then(function (result) {
-        if (result.value) {
-          document.getElementById("formulario_regional").submit();
-          Swal.fire({
-            title: 'Gestionando la base de datos...',
-            html: 'Por favor, espere...',
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-            didOpen: () => {
-              Swal.showLoading();
-            }
-          })
+function fechas_busqueda_epm() {
+  swal
+    .fire({
+      title: "Fechas a buscar",
+      type: "warning",
+      html: '<div style="width:350px;margin:auto;"><label>Inicio</label><br><input id="inicio" type="date" class="form-control"><label>Final</label><br><input id="final" type="date" class="form-control"></div>',
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "Buscar",
+      focusConfirm: false,
+      preConfirm: () => {
+        const inicio = Swal.getPopup().querySelector("#inicio").value;
+        const final = Swal.getPopup().querySelector("#final").value;
+        if (!inicio || !final) {
+          Swal.showValidationMessage(`Por favor seleccione fechas a buscar`);
         }
-      });
-  }
-  if (hasError) event.preventDefault();
-});
+        return { inicio: inicio, final: final };
+      },
+    })
+    .then(function (result) {
+      if (result.value) {
+        inicio=result.value.inicio
+        final=result.value.final
+        window.location.href = "/epm/"+inicio+"/"+final+"/";
+        
+        alert(i) 
+      }
+    });
+}
+
+function descartar(id) {
+  url = "/descartar/";
+  swal
+    .fire({
+      title: "¿Esta seguro de descartar la base de datos?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "¡Si, descartar!",
+    })
+    .then(function (result) {
+      if (result.value) {
+        window.location.href = url+id+"/";
+      }
+    });
+}
+
+function gestion_fenix() {
+  url = "/comparativo/calculo_novedades_perseo_vs_fenix/";
+  swal
+    .fire({
+      title: "¿Esta seguro de realizar esta gestión?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "¡Si, realizar!",
+    })
+    .then(function (result) {
+      if (result.value) {
+        window.location.href = url;
+      }
+    });
+}
+
+function reiniciar_bd_perseo_vs_fenix() {
+  url = "/comparativo/reiniciar/";
+  swal
+    .fire({
+      title: "¿Esta seguro de reiniciar las extracciones?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "¡Si, reiniciar!",
+    })
+    .then(function (result) {
+      if (result.value) {
+        window.location.href = url;
+      }
+    });
+}
+
+function reiniciar_novedades_bd_perseo_vs_fenix() {
+  url = "/comparativo/reiniciar-novedades-perseo-fenix/";
+  swal
+    .fire({
+      title: "¿Esta seguro de reiniciar las novedades?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "¡Si, reiniciar!",
+    })
+    .then(function (result) {
+      if (result.value) {
+        window.location.href = url;
+      }
+    });
+}
+
+function analisis_fechas_perseo() {
+  url = "/limpiar/";
+  swal
+    .fire({
+      title: "¿Esta seguro de Gestionar la base de datos?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "¡Si, gestionar!",
+    })
+    .then(function (result) {
+      if (result.value) {
+        window.location.href = url;
+      }
+    });
+}
+
+// CODIGO MENU BONIFICACIONES
+
+function gestionar_bd_bonificacion() {
+  url = "/ped-bonficiaciones/gestion_fenix/";
+  swal
+    .fire({
+      title: "¿Esta seguro de gestionar la BBDD?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "¡Si, gestionar!",
+    })
+    .then(function (result) {
+      if (result.value) {
+        Swal.fire({
+          title: 'Gestionando la base de datos...',
+          html: 'Por favor, espere...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        })
+        window.location.href = url;
+      }
+    });
+}
+
+function reiniciar_bd_bonificacion() {
+  url = "/ped-bonficiaciones/reiniciar_actas_bonificaciones/";
+  swal
+    .fire({
+      title: "¿Esta seguro de reiniciar la BBDD?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "¡Si, reiniciar!",
+    })
+    .then(function (result) {
+      if (result.value) {
+        Swal.fire({
+          title: 'Reiniciando la base de datos...',
+          html: 'Por favor, espere...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        })
+        window.location.href = url;
+      }
+    });
+}
+
+function reiniciar_bonificaciones() {
+  url = "/ped-bonficiaciones/reiniciar_bonificaciones/";
+  swal
+    .fire({
+      title: "¿Esta seguro de reiniciar el dato de las bonificaciones?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "¡Si, reiniciar!",
+    })
+    .then(function (result) {
+      if (result.value) {
+        Swal.fire({
+          title: 'Reiniciando...',
+          html: 'Por favor, espere...',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        })
+        window.location.href = url;
+      }
+    });
+}
 
 function calculo_novedades() {
   url = "/analisis/calculo_novedades/";
@@ -274,173 +465,19 @@ function limpiar_acta_analisis() {
     });
 }
 
-function reiniciar_bd() {
-  url = "/eliminar/";
-  swal
-    .fire({
-      title: "¿Esta seguro de eliminar la información de la base de datos?",
-      type: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Cancelar",
-      confirmButtonText: "¡Si, eliminar!",
-    })
-    .then(function (result) {
-      if (result.value) {
-        Swal.fire({
-          title: 'Borrando información de la base de datos...',
-          html: 'Por favor, espere...',
-          allowEscapeKey: false,
-          allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          }
-        })
-        window.location.href = url;
-      }
-    });
-}
-
-function fechas_busqueda_epm() {
-  swal
-    .fire({
-      title: "Fechas a buscar",
-      type: "warning",
-      html: '<div style="width:350px;margin:auto;"><label>Inicio</label><br><input id="inicio" type="date" class="form-control"><label>Final</label><br><input id="final" type="date" class="form-control"></div>',
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Cancelar",
-      confirmButtonText: "Buscar",
-      focusConfirm: false,
-      preConfirm: () => {
-        const inicio = Swal.getPopup().querySelector("#inicio").value;
-        const final = Swal.getPopup().querySelector("#final").value;
-        if (!inicio || !final) {
-          Swal.showValidationMessage(`Por favor seleccione fechas a buscar`);
-        }
-        return { inicio: inicio, final: final };
-      },
-    })
-    .then(function (result) {
-      if (result.value) {
-        inicio = result.value.inicio
-        final = result.value.final
-        Swal.fire({
-          title: 'Buscando la información...',
-          html: 'Por favor, espere...',
-          allowEscapeKey: false,
-          allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          }
-        })
-        window.location.href = "/epm/" + inicio + "/" + final + "/";
-      }
-    });
-}
-
-function descartar(id) {
-  url = "/descartar/";
-  swal
-    .fire({
-      title: "¿Esta seguro de descartar la base de datos?",
-      type: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Cancelar",
-      confirmButtonText: "¡Si, descartar!",
-    })
-    .then(function (result) {
-      if (result.value) {
-        window.location.href = url + id + "/";
-      }
-    });
-}
-
-function calculo_novedades_perseo_vs_fenix() {
-  url = "/comparativo/calculo_novedades_perseo_vs_fenix/";
-  swal
-    .fire({
-      title: "¿Esta seguro de realizar esta gestión?",
-      type: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Cancelar",
-      confirmButtonText: "¡Si, realizar!",
-    })
-    .then(function (result) {
-      if (result.value) {
-        Swal.fire({
-          title: 'Gestionando la base de datos...',
-          html: 'Por favor, espere...',
-          allowEscapeKey: false,
-          allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          }
-        })
-        window.location.href = url;
-      }
-    });
-}
-
-function reiniciar_bd_perseo_vs_fenix() {
-  url = "/comparativo/reiniciar/";
-  swal
-    .fire({
-      title: "¿Esta seguro de reiniciar las extracciones?",
-      type: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Cancelar",
-      confirmButtonText: "¡Si, reiniciar!",
-    })
-    .then(function (result) {
-      if (result.value) {
-        Swal.fire({
-          title: 'Reiniciando la base de datos...',
-          html: 'Por favor, espere...',
-          allowEscapeKey: false,
-          allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          }
-        })
-        window.location.href = url;
-      }
-    });
-}
-
-function reiniciar_novedades_bd_perseo_vs_fenix() {
-  url = "/comparativo/reiniciar-novedades-perseo-fenix/";
-  swal
-    .fire({
-      title: "¿Esta seguro de reiniciar las novedades?",
-      type: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Cancelar",
-      confirmButtonText: "¡Si, reiniciar!",
-    })
-    .then(function (result) {
-      if (result.value) {
-        Swal.fire({
-          title: 'Reiniciando las novedades...',
-          html: 'Por favor, espere...',
-          allowEscapeKey: false,
-          allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          }
-        })
-        window.location.href = url;
-      }
-    });
-}
+// consulta con ajax
+$('#search-button').click(function () {
+  console.log("llegue a js")
+  $.ajax({
+    url: '/nuevo_analisis/busqueda-pedidos-acta-analisis/',  // URL de la vista de Django
+    type: 'POST',
+    data: {
+      'nombre': 'jorge'
+    },
+    success: function (response) {  // función a ejecutar si la solicitud es exitosa
+      console.log(response);  // imprime la respuesta del servidor en la consola
+    }
+  });
+});
+// fin consulta con ajax
 

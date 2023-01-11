@@ -24,6 +24,7 @@ urlpatterns = [
     path('otros/<int:cliente>/<int:apla>/<int:pendi>/', otros_pedidos, name="otros"),
     path('epm/<str:inicio>/<str:final>/', vencimientos_epm, name="epm"),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('ped-bonficiaciones/', include('bonificaciones.urls')),
 
     path('comparativo/', include('perseovsfenix.urls')),
     path('analisis/', include('analisis.urls')),
